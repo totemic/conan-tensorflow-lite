@@ -1,0 +1,23 @@
+diff --git a/tensorflow/lite/tools/make/download_dependencies.sh b/tensorflow/lite/tools/make/download_dependencies.sh
+index 4b4df1e9f9..dac1af512a 100755
+--- a/tensorflow/lite/tools/make/download_dependencies.sh
++++ b/tensorflow/lite/tools/make/download_dependencies.sh
+@@ -29,7 +29,8 @@ if [ ! -f $BZL_FILE_PATH ]; then
+   exit 1;
+ fi
+ 
+-EIGEN_URL="$(grep -o 'http.*bitbucket.org/eigen/eigen/get/.*tar\.gz' "${BZL_FILE_PATH}" | grep -v mirror.tensorflow | head -n1)"
++#EIGEN_URL="$(grep -o 'http.*bitbucket.org/eigen/eigen/get/.*tar\.gz' "${BZL_FILE_PATH}" | grep -v mirror.tensorflow | head -n1)"
++EIGEN_URL="https://storage.googleapis.com/mirror.tensorflow.org/gitlab.com/libeigen/eigen/-/archive/4e696901f873a2347f76d931cf2f701e31e15d05/eigen-4e696901f873a2347f76d931cf2f701e31e15d05.tar.gz"
+ GEMMLOWP_URL="$(grep -o 'https://storage.googleapis.com/mirror.tensorflow.org/github.com/google/gemmlowp/.*zip' "${BZL_FILE_PATH}" | head -n1)"
+ GOOGLETEST_URL="https://github.com/google/googletest/archive/release-1.8.0.tar.gz"
+ ABSL_URL="$(grep -o 'https://github.com/abseil/abseil-cpp/.*tar.gz' "${BZL_FILE_PATH}" | head -n1)"
+@@ -85,6 +86,8 @@ download_and_extract() {
+   find "${dir}" -type f -name '*BUILD' -delete
+ }
+ 
++echo "$EIGEN_URL $DOWNLOADS_DIR"
++
+ download_and_extract "${EIGEN_URL}" "${DOWNLOADS_DIR}/eigen"
+ download_and_extract "${GEMMLOWP_URL}" "${DOWNLOADS_DIR}/gemmlowp"
+ download_and_extract "${GOOGLETEST_URL}" "${DOWNLOADS_DIR}/googletest"
