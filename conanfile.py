@@ -21,8 +21,8 @@ class TFLiteConan(ConanFile):
     build_subfolder = "tensorflow/lite/tools/make"
     generators = "make"
 
-    def build_requirements(self):
-        pass
+    def requirements(self):
+        self.requires('flatbuffers/1.11.0@totemic/stable')
 
     def source(self):
         git = tools.Git(folder=self.source_subfolder)
