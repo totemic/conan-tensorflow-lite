@@ -1,14 +1,14 @@
-import sys
-from os import getcwd
-from multiprocessing import cpu_count
-from conans import ConanFile, tools, AutoToolsBuildEnvironment
+from conans import ConanFile, tools
 
+VERSION = "2.1.0"
 
 class TFLiteConan(ConanFile):
     # Basic info
     name = "tensorflow-lite"
-    version = "2.1.0"
-    repo_url = "https://github.com/tensorflow/tensorflow.git"
+    version = VERSION
+    scm = dict(type="git",
+               url="https://github.com/tensorflow/tensorflow.git",
+               revision=f"v{VERSION}")
 
     # Other package details
     description = "https://www.tensorflow.org"
@@ -17,28 +17,23 @@ class TFLiteConan(ConanFile):
     # Conan build process settings
     exports = ['01-fix-download-dependencies.patch']
     settings = "os", "arch", "compiler", "build_type"
-    source_subfolder = "tensorflow"
+    
     build_subfolder = "tensorflow/lite/tools/make"
-    generators = "make"
 
     def requirements(self):
         self.requires('flatbuffers/1.11.0@google/stable')
 
     def source(self):
-        git = tools.Git(folder=self.source_subfolder)
-        git.clone(self.repo_url)
-        with tools.chdir(self.source_subfolder):
-            self.run(f"git checkout -b v{self.version} tags/v{self.version}")
-            tools.patch(patch_file="../01-fix-download-dependencies.patch")
+        tools.patch(patch_file="01-fix-download-dependencies.patch")
+        self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
-        with tools.chdir(self.source_subfolder):
-            self.run(f"{self.build_subfolder}/download_dependencies.sh")
-            self.run(f"{self.build_subfolder}/build_lib.sh")
+        print(self.source_folder)
+        self.run(f"{self.source_folder}/{self.build_subfolder}/build_lib.sh")
 
     def package(self):
-        self.copy(pattern="*.a", dst="lib", keep_path=False)
-        self.copy(pattern="*.h", dst="include/tensorflow/lite", src="tensorflow/tensorflow/lite", keep_path=True)
+        self.copy(pattern="*/libtensorflow-lite.a", dst="lib", src=f"tensorflow/lite", keep_path=False)
+        self.copy(pattern="*.h", dst="include/tensorflow/lite", src=f"tensorflow/lite", keep_path=True)
 
     def package_info(self):
         self.cpp_info.libs = ["tensorflow-lite", "pthread"]
