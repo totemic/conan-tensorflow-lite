@@ -22,7 +22,7 @@ class TFLiteConan(ConanFile):
     generators = "make"
 
     def requirements(self):
-        self.requires('flatbuffers/1.11.0@totemic/stable')
+        self.requires('flatbuffers/1.11.0@google/stable')
 
     def source(self):
         git = tools.Git(folder=self.source_subfolder)
