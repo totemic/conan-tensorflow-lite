@@ -28,7 +28,6 @@ class TFLiteConan(ConanFile):
         self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
-        print(self.source_folder)
         self.run(f"{self.source_folder}/{self.build_subfolder}/build_lib.sh")
 
     def package(self):
