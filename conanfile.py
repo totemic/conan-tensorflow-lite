@@ -28,7 +28,10 @@ class TFLiteConan(ConanFile):
         self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
-        self.run(f"{self.source_folder}/{self.build_subfolder}/build_lib.sh")
+        if self.settings.arch == "armv8":
+            self.run(f"{self.source_folder}/{self.build_subfolder}/build_aarch64_lib.sh")
+        else:
+            self.run(f"{self.source_folder}/{self.build_subfolder}/build_lib.sh")
 
     def package(self):
         self.copy(pattern="*/libtensorflow-lite.a", dst="lib", src=f"tensorflow/lite", keep_path=False)
