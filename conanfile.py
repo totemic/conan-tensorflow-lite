@@ -38,6 +38,6 @@ class TFLiteConan(ConanFile):
         self.copy(pattern="*.h", dst="include/tensorflow/lite", src=f"tensorflow/lite", keep_path=True)
 
     def package_info(self):
-        self.cpp_info.libs = ["tensorflow-lite", "pthread"]
+        self.cpp_info.libs = ["tensorflow-lite", "stdc++"]
         if self.settings.os == "Linux":
-            self.cpp_info.libs.extend(["c", "dl", "rt"])
+            self.cpp_info.libs.extend(["c", "m", "dl", "rt", "pthread"])
