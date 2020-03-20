@@ -39,3 +39,5 @@ class TFLiteConan(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = ["tensorflow-lite", "pthread"]
+        if self.settings.os == "Linux":
+            self.cpp_info.libs.extend(["c", "dl", "rt"])
