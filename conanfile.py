@@ -15,7 +15,7 @@ class TFLiteConan(ConanFile):
     license = "Apache-2.0"
 
     # Conan build process settings
-    exports = ['01-remove-densify-operator.patch']
+    exports = ['01-fix-missing-sources.patch']
     settings = "os", "arch", "compiler", "build_type"
 
     build_subfolder = "tensorflow/lite/tools/make"
@@ -24,7 +24,7 @@ class TFLiteConan(ConanFile):
         self.requires('flatbuffers/1.11.0@google/stable')
 
     def source(self):
-        tools.patch(patch_file="01-remove-densify-operator.patch")
+        tools.patch(patch_file="01-fix-missing-sources.patch")
         self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
