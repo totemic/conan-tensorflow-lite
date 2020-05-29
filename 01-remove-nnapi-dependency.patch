@@ -1,13 +1,13 @@
 diff --git a/tensorflow/lite/core/subgraph.h b/tensorflow/lite/core/subgraph.h
-index 4380feda..e2f1af24 100644
+index 17310447..0f506a37 100644
 --- a/tensorflow/lite/core/subgraph.h
 +++ b/tensorflow/lite/core/subgraph.h
-@@ -24,7 +24,7 @@ limitations under the License.
- #include "tensorflow/lite/c/common.h"
+@@ -23,7 +23,7 @@ limitations under the License.
+ #include "tensorflow/lite/allocation.h"
+ #include "tensorflow/lite/c/c_api_internal.h"
  #include "tensorflow/lite/core/api/profiler.h"
- #include "tensorflow/lite/core/macros.h"
 -#include "tensorflow/lite/delegates/nnapi/nnapi_delegate.h"
 +// #include "tensorflow/lite/delegates/nnapi/nnapi_delegate.h"
- #include "tensorflow/lite/experimental/resource/resource_base.h"
+ #include "tensorflow/lite/experimental/resource_variable/resource_variable.h"
  #include "tensorflow/lite/memory_planner.h"
  #include "tensorflow/lite/util.h"

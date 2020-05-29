@@ -1,6 +1,6 @@
 from conans import ConanFile, tools
 
-VERSION = "2.2.0"
+VERSION = "2.1.1"
 
 class TFLiteConan(ConanFile):
     # Basic info
