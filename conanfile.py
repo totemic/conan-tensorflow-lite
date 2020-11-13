@@ -1,6 +1,6 @@
 from conans import ConanFile, tools
 
-VERSION = "2.1.0.post1"
+VERSION = "2.5.0.post1"
 
 class TFLiteConan(ConanFile):
     # Basic info
@@ -8,7 +8,7 @@ class TFLiteConan(ConanFile):
     version = VERSION
     scm = dict(type="git",
                url="https://github.com/tensorflow/tensorflow.git",
-               revision=f"d855adfc5a0195788bf5f92c3c7352e638aa1109")
+               revision=f"f394a768719a55b5c351ed1ecab2ec6f16f99dd4")
 
     # Other package details
     description = "https://www.tensorflow.org"
@@ -21,11 +21,11 @@ class TFLiteConan(ConanFile):
     build_subfolder = "tensorflow/lite/tools/make"
 
     def requirements(self):
-        self.requires('flatbuffers/1.11.0@google/stable')
+        self.requires('flatbuffers/1.12.0@google/stable')
 
     def source(self):
-        tools.patch(patch_file="01-fix-missing-sources.patch")
-        tools.patch(patch_file="02-tar-instead-of-zip.patch")
+        # tools.patch(patch_file="01-fix-missing-sources.patch")
+        # tools.patch(patch_file="02-tar-instead-of-zip.patch")
         self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
