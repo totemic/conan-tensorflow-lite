@@ -15,7 +15,7 @@ class TFLiteConan(ConanFile):
     license = "Apache-2.0"
 
     # Conan build process settings
-    exports = ["01-tar-instead-of-zip.patch", "02-ignore-nnapi.patch"]
+    exports = ["01-fix-missing-sources.patch", "02-tar-instead-of-zip.patch"]
     settings = "os", "arch", "compiler", "build_type"
 
     build_subfolder = "tensorflow/lite/tools/make"
@@ -24,8 +24,8 @@ class TFLiteConan(ConanFile):
         self.requires('flatbuffers/1.12.0@google/stable')
 
     def source(self):
-        tools.patch(patch_file="01-tar-instead-of-zip.patch")
-        tools.patch(patch_file="02-ignore-nnapi.patch")
+        # tools.patch(patch_file="01-fix-missing-sources.patch")
+        # tools.patch(patch_file="02-tar-instead-of-zip.patch")
         self.run(f"{self.build_subfolder}/download_dependencies.sh")
 
     def build(self):
