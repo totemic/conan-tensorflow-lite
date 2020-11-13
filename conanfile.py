@@ -21,9 +21,9 @@ class TFLiteConan(ConanFile):
     exports = ["01-tar-instead-of-zip.patch", "02-ignore-nnapi.patch"]
     settings = "os", "arch", "compiler", "build_type"
 
-    def system_requirements(self):
-        installer = tools.SystemPackageTool()
-        installer.install("make")
+    # def system_requirements(self):
+    #     installer = tools.SystemPackageTool()
+    #     installer.install("make")
 
     def requirements(self):
         self.requires('flatbuffers/1.12.0@google/stable')
