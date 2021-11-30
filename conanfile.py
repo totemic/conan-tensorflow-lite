@@ -1,36 +1,43 @@
 from os.path import join
 from conans import AutoToolsBuildEnvironment, ConanFile, tools
 
-VERSION = "2.5.0.post1"
 BUILD_SUBFOLDER = "tensorflow/lite/tools/make"
 
 
 class TFLiteConan(ConanFile):
     # Basic info
     name = "tensorflow-lite"
-    version = VERSION
-    scm = dict(type="git",
-               url="https://github.com/tensorflow/tensorflow.git",
-               revision=f"f394a768719a55b5c351ed1ecab2ec6f16f99dd4")
+    scm = None
 
     # Other package details
     description = "https://www.tensorflow.org"
     license = "Apache-2.0"
 
     # Conan build process settings
-    exports = ["01-tar-instead-of-zip.patch", "02-ignore-nnapi.patch"]
     settings = "os", "arch", "compiler", "build_type"
 
     # def system_requirements(self):
     #     installer = tools.SystemPackageTool()
     #     installer.install("make")
 
+    def configure(self):
+        self.scm = dict(
+            type="git",
+            url="https://github.com/tensorflow/tensorflow.git",
+            revision=self.conan_data["revisions"][self.version]
+        )
+
+    def export(self):
+        patches = self.conan_data["patches"][self.version]
+        for patch in patches:
+            self.copy(patch)
+
     def requirements(self):
         self.requires('flatbuffers/1.12.0@google/stable')
 
     def source(self):
-        tools.patch(patch_file="01-tar-instead-of-zip.patch")
-        tools.patch(patch_file="02-ignore-nnapi.patch")
+        for patch in self.conan_data["patches"][self.version]:
+           tools.patch(patch_file=patch)
 
         self.run(join(BUILD_SUBFOLDER, "download_dependencies.sh"))
 
